@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activités autour du chalet Génie des Alpages</title>
+<meta name="description" content="Ski de piste, ski de fond et randonnées autour du chalet Génie des Alpages, à Glières-Val-de-Borne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  /* Même identité que la page d'accueil : panneaux de bois sur fond de neige, couleurs de pistes pour les niveaux */
+  :root{
+    --neige:#F4F6F5;
+    --epicea:#1D3A33;
+    --ardoise:#55636A;
+    --meleze:#C58F3D;
+    --lichen:#DCE3D8;
+    --encre:#16211E;
+    --poteau:#5B4331;
+    --verte:#2F8A4E;
+    --bleue:#2462B3;
+    --rouge:#C23B2E;
+    --noire:#16211E;
+    --sans:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+    --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+    --wrap:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--neige);color:var(--encre);font:400 1.0625rem/1.65 var(--serif)}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--meleze);outline-offset:3px}
+  h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.05;margin:0;text-wrap:balance}
+  h2{font-size:clamp(2rem,4vw,3rem);color:var(--epicea)}
+  h3{font-size:1.75rem;color:var(--epicea)}
+  p{margin:0 0 1rem;max-width:64ch}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1.25rem,env(safe-area-inset-right,0px))}
+
+  /* En-tête */
+  .tete{background:var(--epicea);color:var(--neige)}
+  .tete nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:1.25rem}
+  .brand{font:600 1.35rem var(--sans);color:#fff;text-decoration:none}
+  .retour{font:500 1.1rem var(--sans);color:#fff;text-decoration:none}
+  .retour:hover{text-decoration:underline;text-underline-offset:4px}
+  .tete .intro{padding-block:2.5rem 3.5rem;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:end}
+  .tete h1{font-size:clamp(3rem,8vw,6rem);font-weight:700;color:#fff}
+  .tete p{color:#d5ddd8;margin:1rem 0 0;font-size:1.15rem}
+
+  /* Choix de la saison : deux planches de panneau indicateur */
+  .choix{position:relative;padding:.5rem 0 1.5rem 1.25rem;min-width:280px}
+  .choix::before{content:"";position:absolute;left:1.25rem;top:0;bottom:0;width:16px;background:var(--poteau);border-radius:2px}
+  .tete .choix-titre{position:relative;font:600 1rem var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#d5ddd8;margin:0 0 .75rem 2.5rem}
+  .planche{position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:1rem;width:100%;margin:0 0 .75rem;
+    padding:.8rem 3rem .8rem 2.4rem;border:0;cursor:pointer;text-align:left;
+    font:600 1.9rem var(--sans);color:var(--encre);background:#a87a37;
+    clip-path:polygon(0 0,calc(100% - 26px) 0,100% 50%,calc(100% - 26px) 100%,0 100%);transition:background .15s,transform .15s}
+  .planche small{font-size:1.1rem;font-weight:500}
+  .planche:hover{transform:translateX(4px)}
+  .planche[aria-pressed="true"]{background:var(--meleze)}
+  .planche[aria-pressed="false"]{opacity:.75}
+  .planche[aria-pressed="false"]:hover{opacity:1}
+
+  /* Sections */
+  main section{padding-block:4.5rem}
+  .saison-tete{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem 2rem;margin-bottom:2.5rem}
+  .saison-tete p{margin:0}
+  .alerte{border-left:4px solid var(--meleze);background:var(--lichen);padding:1rem 1.25rem;font-size:1rem;margin:0 0 2.5rem;max-width:none}
+
+  /* Cartes ski */
+  .stations{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+  .station{border:2px solid var(--epicea);background:#fff;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;min-width:0}
+  .station p{margin:0}
+  .chiffres{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin:0;padding:1rem 0;border-block:1px solid var(--lichen)}
+  .chiffres div{min-width:0}
+  .chiffres dt{font:600 .9rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--ardoise)}
+  .chiffres dd{margin:0;font:600 1.6rem var(--sans);color:var(--epicea);font-variant-numeric:tabular-nums}
+  .pistes{display:flex;flex-wrap:wrap;gap:.4rem;margin:0;padding:0;list-style:none}
+  .pistes li{font:600 1rem var(--sans);color:#fff;padding:.15rem .6rem;border-radius:2px}
+  .lien{align-self:flex-start;margin-top:auto;font:600 1.15rem var(--sans);color:var(--epicea);text-decoration:none;border-bottom:2px solid var(--meleze);padding-bottom:2px}
+  .lien:hover{color:var(--poteau)}
+  .lien::after{content:" →"}
+
+  h3.sous{font-size:2rem;margin:3.5rem 0 1.25rem}
+  .fond{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+  .fond .station{padding:1.5rem}
+  .fond .station h4{font:600 1.45rem var(--sans);color:var(--epicea);margin:0}
+  .tag{font:600 .95rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:var(--poteau)}
+
+  /* Randonnées */
+  .ete{background:#fff}
+  .randos{display:grid;gap:2rem}
+  .rando{border:2px solid var(--epicea);background:var(--neige);display:grid;grid-template-columns:1fr 1fr;min-width:0}
+  .rando-texte{padding:1.75rem;min-width:0}
+  .rando-tete{display:flex;justify-content:space-between;align-items:start;gap:1rem;margin-bottom:.4rem}
+  .depart{font-size:1rem;color:var(--ardoise);margin-bottom:1.25rem}
+  .niveau{flex:none;font:600 1rem var(--sans);color:#fff;padding:.25rem .7rem;border-radius:2px;white-space:nowrap}
+  .n-facile{background:var(--verte)}
+  .n-moyen{background:var(--bleue)}
+  .n-difficile{background:var(--rouge)}
+  .n-tres{background:var(--noire)}
+  .etapes{margin:0;padding-left:1.4rem;font-size:1rem}
+  .etapes li{margin:.35rem 0;padding-left:.2rem}
+  .etapes li::marker{font:600 1.05rem var(--sans);color:var(--poteau)}
+  .remarque{font-size:.95rem;color:var(--ardoise);margin:1rem 0 0}
+  .rando-carte{background:var(--epicea);color:var(--neige);padding:1.75rem;display:flex;flex-direction:column;gap:1.25rem;min-width:0}
+  .rando-carte .chiffres{border-color:rgba(244,246,245,.25)}
+  .rando-carte .chiffres dt{color:#b9c4bf}
+  .rando-carte .chiffres dd{color:#fff}
+  .rando-carte .lien{color:#fff}
+  .rando-carte .lien:hover{color:var(--meleze)}
+  .profil{width:100%;height:auto;display:block}
+  .profil-titre{font:600 .9rem var(--sans);letter-spacing:.06em;text-transform:uppercase;color:#b9c4bf;margin:0 0 .25rem}
+  .sans-profil{font-size:.95rem;color:#d5ddd8;margin:0;border:1px dashed rgba(244,246,245,.35);padding:1rem}
+
+  footer{background:var(--encre);color:#b9c4bf;padding-block:2.5rem;font-size:.95rem}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+  .sources{font-size:.85rem;color:#8b9993;margin-top:1rem}
+
+  @media (max-width:900px){
+    .tete .intro{grid-template-columns:1fr}
+    .stations,.fond{grid-template-columns:1fr}
+    .rando{grid-template-columns:1fr}
+  }
+  @media (max-width:520px){
+    .choix{min-width:0}
+    .chiffres{grid-template-columns:repeat(2,1fr)}
+    .planche{font-size:1.6rem}
+  }
+</style>
+</head>
+<body>
+
+<header class="tete">
+  <div class="wrap">
+    <nav aria-label="Navigation">
+      <a class="brand" href="index.html">Génie des Alpages</a>
+      <a class="retour" href="index.html">← Retour au chalet</a>
+    </nav>
+    <div class="intro">
+      <div>
+        <h1>Activités</h1>
+        <p>Les pistes de ski, les traces de fond et nos randonnées préférées autour du chalet.</p>
+      </div>
+      <div class="choix" role="group" aria-label="Choisir la saison">
+        <p class="choix-titre">Choisissez la saison</p>
+        <button class="planche" type="button" data-saison="hiver" aria-pressed="true">L'hiver <small>ski</small></button>
+        <button class="planche" type="button" data-saison="ete" aria-pressed="false">L'été <small>randonnées</small></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HIVER -->
+  <section id="hiver" class="hiver">
+    <div class="wrap">
+      <div class="saison-tete">
+        <h2>Activités d'hiver</h2>
+        <p>Deux grandes stations à moins de 10 km, un forfait commun et trois domaines de ski de fond.</p>
+      </div>
+      <p class="alerte">En hiver, l'accès au chalet et aux stations nécessite des pneus neige ou des chaînes. Vérifiez l'ouverture des pistes et l'enneigement sur les sites des stations avant de partir.</p>
+
+      <div class="stations">
+        <article class="station">
+          <span class="tag">Ski de piste · 7 km du chalet</span>
+          <h3>Le Grand-Bornand</h3>
+          <p>Un domaine familial réparti entre le village et le Chinaillon, avec beaucoup de pistes vertes et bleues pour progresser.</p>
+          <dl class="chiffres">
+            <div><dt>Pistes</dt><dd>84 km</dd></div>
+            <div><dt>Altitude</dt><dd>1000–2100 m</dd></div>
+            <div><dt>Pistes</dt><dd>46</dd></div>
+          </dl>
+          <ul class="pistes" aria-label="Pistes par couleur">
+            <li style="background:var(--verte)">15 vertes</li>
+            <li style="background:var(--bleue)">13 bleues</li>
+            <li style="background:var(--rouge)">13 rouges</li>
+            <li style="background:var(--noire)">5 noires</li>
+          </ul>
+          <a class="lien" href="https://www.legrandbornand.com" target="_blank" rel="noopener">Site de la station</a>
+        </article>
+
+        <article class="station">
+          <span class="tag">Ski de piste · 10 km du chalet</span>
+          <h3>La Clusaz</h3>
+          <p>Le plus grand domaine des Aravis : cinq massifs reliés (Beauregard, Manigod, l'Étale, l'Aiguille et Balme), du débutant au hors-piste.</p>
+          <dl class="chiffres">
+            <div><dt>Pistes</dt><dd>125 km</dd></div>
+            <div><dt>Altitude</dt><dd>1000–2600 m</dd></div>
+            <div><dt>Pistes</dt><dd>85</dd></div>
+          </dl>
+          <ul class="pistes" aria-label="Pistes par couleur">
+            <li style="background:var(--verte)">16 vertes</li>
+            <li style="background:var(--bleue)">31 bleues</li>
+            <li style="background:var(--rouge)">30 rouges</li>
+            <li style="background:var(--noire)">8 noires</li>
+          </ul>
+          <a class="lien" href="https://www.laclusaz.com" target="_blank" rel="noopener">Site de la station</a>
+        </article>
+      </div>
+      <p class="remarque">Le forfait Massif des Aravis donne accès aux deux stations, reliées par navette, soit environ 210 km de pistes.</p>
+
+      <h3 class="sous">Ski de fond : les traces les plus proches</h3>
+      <div class="fond">
+        <article class="station">
+          <span class="tag">Sur la commune</span>
+          <h4>Plateau des Glières</h4>
+          <p>29 km de pistes, de la verte à la noire, entre 1450 et 1550 m, sur un grand plateau ouvert et calme. Accès par Le Petit-Bornand, forfaits en vente aux chalets en bois. Location de skis et de raquettes sur place.</p>
+          <a class="lien" href="https://www.domainenordiquedesglieres.com" target="_blank" rel="noopener">Domaine nordique des Glières</a>
+        </article>
+        <article class="station">
+          <span class="tag">Le Grand-Bornand</span>
+          <h4>Vallée du Bouchet et Chinaillon</h4>
+          <p>Environ 80 km de pistes sur deux sites. La vallée du Bouchet part du village ; boucles de 1 à 15 km, du niveau vert au noir.</p>
+          <a class="lien" href="https://www.legrandbornand.com/ski-nordique.html" target="_blank" rel="noopener">Ski nordique au Grand-Bornand</a>
+        </article>
+        <article class="station">
+          <span class="tag">La Clusaz</span>
+          <h4>Plateau des Confins</h4>
+          <p>63 km de pistes entre 1420 et 1650 m, avec une liaison vers la vallée du Bouchet. Le site a accueilli des étapes de Coupe du monde de ski de fond.</p>
+          <a class="lien" href="https://www.laclusaz.com" target="_blank" rel="noopener">Site de La Clusaz</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉTÉ -->
+  <section id="ete" class="ete">
+    <div class="wrap">
+      <div class="saison-tete">
+        <h2>Randonnées d'été</h2>
+        <p>Six sorties, de la balade en famille à l'arche rocheuse du Trou de la Mouche.</p>
+      </div>
+      <p class="alerte">Les niveaux reprennent les couleurs des pistes : <strong>vert</strong> facile, <strong>bleu</strong> moyen, <strong>rouge</strong> difficile, <strong>noir</strong> très difficile. Les durées s'entendent hors pauses. Partez tôt, prenez de l'eau et vérifiez la météo : les orages sont fréquents l'après-midi en été.</p>
+
+      <div class="randos">
+
+        <article class="rando">
+          <div class="rando-texte">
+            <div class="rando-tete"><h3>Le Suet</h3><span class="niveau n-difficile">Difficile</span></div>
+            <p class="depart">Départ : Forgeassoud-Dessus (Saint-Jean-de-Sixt), parking près de la ferme, 999 m. Boucle.</p>
+            <ol class="etapes">
+              <li>Passez derrière la ferme et montez le pré vers la forêt. Au panneau, prenez le sentier à droite.</li>
+              <li>Montée en forêt. Un court aller-retour mène à un point de vue (1154 m), puis la pente se raidit.</li>
+              <li>À la cabane du Suet (1630 m), prenez le sentier à droite, balisé de rouge sur les rochers.</li>
+              <li>Sommet du Suet (1817 m), puis retour à la cabane par le même chemin.</li>
+              <li>Descendez par le sentier balisé en bleu vers Cerisset, puis le plan de Forgeassoud jusqu'au parking.</li>
+            </ol>
+            <p class="remarque">La fin de la montée traverse des lapiaz, glissants par temps humide. À éviter s'il y a de la neige.</p>
+          </div>
+          <div class="rando-carte">
+            <dl class="chiffres">
+              <div><dt>Durée</dt><dd>4 h 25</dd></div>
+              <div><dt>Distance</dt><dd>7,1 km</dd></div>
+              <div><dt>Dénivelé</dt><dd>+830 m</dd></div>
+            </dl>
+            <div><p class="profil-titre">Profil du tracé</p><svg class="profil" data-profil="suet" role="img" aria-label="Profil altimétrique du Suet, de 999 à 1817 m"></svg></div>
+            <a class="lien" href="https://www.visorando.com/randonnee-le-suet-depuis-forgeassoud/" target="_blank" rel="noopener">Voir le tracé sur la carte</a>
+          </div>
+        </article>
+
+        <article class="rando">
+          <div class="rando-texte">
+            <div class="rando-tete"><h3>Le plateau des Auges depuis Malvoisin</h3><span class="niveau n-difficile">Difficile</span></div>
+            <p class="depart">Départ : parking de Malvoisin, Entremont. Boucle balisée, ouverte du 15 mai au 31 octobre.</p>
+            <ol class="etapes">
+              <li>Du parking de Malvoisin, suivez le balisage du circuit des Auges.</li>
+              <li>Longue montée vers les alpages et les chalets des Auges, sur le plateau.</li>
+              <li>Boucle sur le plateau, puis retour au parking de Malvoisin.</li>
+            </ol>
+            <p class="remarque">Itinéraire long, réservé aux randonneurs entraînés. Téléchargez le tracé GPS officiel avant de partir.</p>
+          </div>
+          <div class="rando-carte">
+            <dl class="chiffres">
+              <div><dt>Durée</dt><dd>6 h 25</dd></div>
+              <div><dt>Distance</dt><dd>17,7 km</dd></div>
+              <div><dt>Dénivelé</dt><dd>+1025 m</dd></div>
+            </dl>
+            <p class="sans-profil">Le tracé détaillé (fichier GPX) est disponible sur la fiche officielle de l'office de tourisme.</p>
+            <a class="lien" href="https://www.haute-savoie-tourisme.org/nature/itineraires-randonnees/7908185-itineraire-pedestre-le-circuit-des-auges-depuis-malvoisin" target="_blank" rel="noopener">Fiche et tracé GPX</a>
+          </div>
+        </article>
+
+        <article class="rando">
+          <div class="rando-texte">
+            <div class="rando-tete"><h3>Le lac de Lessy</h3><span class="niveau n-difficile">Difficile</span></div>
+            <p class="depart">Départ : bout de la route de Paradis, Le Petit-Bornand, 1375 m. Boucle avec l'Aiguille Verte en option.</p>
+            <ol class="etapes">
+              <li>Suivez le large chemin d'alpage qui prolonge la route, puis la forêt jusqu'au chalet du Lainvouet.</li>
+              <li>Peu avant le chalet, prenez à gauche le sentier du lac : il longe la falaise (quelques marches) puis traverse le lapiaz jusqu'au col de la Forclaz (1849 m).</li>
+              <li>Option sommet : à droite vers le col de l'Arête, puis l'arête jusqu'à l'Aiguille Verte (2036 m), panorama à 360°. Retour au col.</li>
+              <li>Descendez au lac de Lessy (1743 m) et aux chalets de Lessy, et faites le tour du lac par le GR 96.</li>
+              <li>Retour par le col de la Forclaz et le chemin de montée.</li>
+            </ol>
+            <p class="remarque">Sans l'Aiguille Verte, descendez directement du col de la Forclaz au lac : la sortie est plus courte et évite l'arête, raide et glissante après la pluie.</p>
+          </div>
+          <div class="rando-carte">
+            <dl class="chiffres">
+              <div><dt>Durée</dt><dd>6 h 05</dd></div>
+              <div><dt>Distance</dt><dd>13,2 km</dd></div>
+              <div><dt>Dénivelé</dt><dd>+800 m</dd></div>
+            </dl>
+            <div><p class="profil-titre">Profil du tracé, avec l'Aiguille Verte</p><svg class="profil" data-profil="lessy" role="img" aria-label="Profil altimétrique du lac de Lessy, de 1375 à 2036 m"></svg></div>
+            <a class="lien" href="https://www.visorando.com/randonnee-lac-de-lessy-et-aiguille-verte-au-depart/" target="_blank" rel="noopener">Voir le tracé sur la carte</a>
+          </div>
+        </article>
+
+        <article class="rando">
+          <div class="rando-texte">
+            <div class="rando-tete"><h3>La ferme du Pas du Loup</h3><span class="niveau" style="background:var(--meleze);color:var(--encre)">Sur rendez-vous</span></div>
+            <p class="depart">Ferme GAEC Le Pas du Loup, lieu-dit Les Plains, Le Petit-Bornand. Alpage l'été sur le plateau des Glières.</p>
+            <ol class="etapes">
+              <li>La ferme fabrique le reblochon, la tomme, l'abondance, la raclette et le Petit Prince des Glières.</li>
+              <li>En été, la ferme reçoit sur rendez-vous : appelez avant de partir au 04 50 22 85 79 ou au 04 50 03 53 26.</li>
+              <li>Paiement en espèces ou par chèque.</li>
+            </ol>
+            <p class="remarque">À combiner avec une sortie sur le plateau des Glières, où la ferme monte en alpage l'été.</p>
+          </div>
+          <div class="rando-carte">
+            <dl class="chiffres">
+              <div><dt>Durée</dt><dd>Variable</dd></div>
+              <div><dt>Accès</dt><dd>Les Plains</dd></div>
+              <div><dt>Ouverture</dt><dd>Toute l'année</dd></div>
+            </dl>
+            <p class="sans-profil">Demandez le meilleur accès à pied en réservant votre visite.</p>
+            <a class="lien" href="https://www.haute-savoie-tourisme.org/index.php/139518-ferme-gaec-le-pas-du-loup" target="_blank" rel="noopener">Fiche de la ferme</a>
+          </div>
+        </article>
+
+        <article class="rando">
+          <div class="rando-texte">
+            <div class="rando-tete"><h3>Le chalet du Curé depuis le col des Aravis</h3><span class="niveau n-facile">Facile</span></div>
+            <p class="depart">Départ : col des Aravis, parking gratuit derrière le restaurant des Rhododendrons, 1485 m. Aller-retour.</p>
+            <ol class="etapes">
+              <li>Prenez la piste forestière qui monte doucement en direction de l'Étale.</li>
+              <li>Traversez le torrent des Aravis, puis continuez tout droit sur la piste au virage en épingle.</li>
+              <li>Passez une ferme d'alpage jusqu'à l'auberge de Plan Rebord (point d'eau).</li>
+              <li>Suivez la piste en balcon jusqu'au chalet du Curé (1690 m), où des tables de pique-nique attendent les randonneurs.</li>
+              <li>Retour par le même chemin.</li>
+            </ol>
+            <p class="remarque">Une piste large et peu pentue, adaptée aux familles.</p>
+          </div>
+          <div class="rando-carte">
+            <dl class="chiffres">
+              <div><dt>Durée</dt><dd>2 h 30 A/R</dd></div>
+              <div><dt>Distance</dt><dd>7,5 km A/R</dd></div>
+              <div><dt>Dénivelé</dt><dd>+270 m</dd></div>
+            </dl>
+            <div><p class="profil-titre">Profil du tracé, aller</p><svg class="profil" data-profil="cure" role="img" aria-label="Profil altimétrique du chalet du Curé, de 1485 à 1690 m"></svg></div>
+            <a class="lien" href="https://www.visorando.com/randonnee-du-col-des-aravis-aux-stallets-via-le-ch/" target="_blank" rel="noopener">Voir le tracé sur la carte</a>
+          </div>
+        </article>
+
+        <article class="rando">
+          <div class="rando-texte">
+            <div class="rando-tete"><h3>Le Trou de la Mouche</h3><span class="niveau n-tres">Très difficile</span></div>
+            <p class="depart">Départ : parking du lac des Confins, La Clusaz, 1442 m. Boucle par la combe de Paccaly.</p>
+            <ol class="etapes">
+              <li>Suivez la piste vers la chaîne des Aravis. À la grange, un panneau indique le sentier qui monte dans les pâturages.</li>
+              <li>Dans les éboulis, suivez la flèche peinte sur un rocher, puis tournez à gauche pour suivre l'éperon.</li>
+              <li>Au-dessus de 2370 m, le sentier s'efface : montez prudemment en choisissant le meilleur passage.</li>
+              <li>Le Trou de la Mouche (2436 m), une arche naturelle percée dans la falaise. Pause et panorama.</li>
+              <li>Descendez dans la combe de Paccaly, prenez à droite vers Paccaly d'en Haut, puis passez La Bottière jusqu'au parking.</li>
+            </ol>
+            <p class="remarque">Itinéraire non balisé, avec un passage raide sous l'arche. Emportez la carte IGN 3430 ET et de bonnes chaussures.</p>
+          </div>
+          <div class="rando-carte">
+            <dl class="chiffres">
+              <div><dt>Durée</dt><dd>5 h</dd></div>
+              <div><dt>Distance</dt><dd>8,9 km</dd></div>
+              <div><dt>Dénivelé</dt><dd>+1015 m</dd></div>
+            </dl>
+            <div><p class="profil-titre">Profil du tracé</p><svg class="profil" data-profil="mouche" role="img" aria-label="Profil altimétrique du Trou de la Mouche, de 1441 à 2436 m"></svg></div>
+            <a class="lien" href="https://www.visorando.com/randonnee-trou-de-la-mouche-2/" target="_blank" rel="noopener">Voir le tracé sur la carte</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Chalet Génie des Alpages, Glières-Val-de-Borne, Haute-Savoie</span>
+    <a href="index.html">Retour au chalet</a>
+  </div>
+  <div class="wrap"><p class="sources">Données des itinéraires : Visorando et Haute-Savoie Tourisme. Chiffres des domaines skiables donnés à titre indicatif, à vérifier auprès des stations.</p></div>
+</footer>
+
+<script>
+(function(){
+  // Profils : [km, altitude] aux points de passage des itinéraires
+  var profils = {
+    suet:   [[0,999],[0.28,1025],[0.98,1154],[1.73,1408],[2.49,1630],[3.07,1817],[3.65,1630],[5.41,1352],[5.86,1221],[7.08,999]],
+    lessy:  [[0,1375],[2.3,1641],[4.41,1849],[5.2,1903],[6.02,2036],[6.84,1903],[7.61,1743],[7.87,1766],[8.77,1849],[10.88,1641],[13.18,1375]],
+    cure:   [[0,1485],[0.84,1592],[1.59,1640],[2.71,1608],[3.78,1690]],
+    mouche: [[0,1442],[0.45,1451],[1.66,1810],[2.89,2167],[3.49,2373],[3.62,2436],[3.79,2368],[4.22,2331],[5.96,1747],[6.42,1669],[8.85,1441]]
+  };
+  var NS = "http://www.w3.org/2000/svg";
+  function el(n, a, t){ var e=document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); if(t!=null) e.textContent=t; return e; }
+
+  document.querySelectorAll("svg[data-profil]").forEach(function(svg){
+    var pts = profils[svg.getAttribute("data-profil")]; if(!pts) return;
+    var W=440, H=170, g={l:44,r:12,t:14,b:26};
+    var maxKm = pts[pts.length-1][0];
+    var alts = pts.map(function(p){return p[1];});
+    var lo = Math.floor(Math.min.apply(null,alts)/200)*200, hi = Math.ceil(Math.max.apply(null,alts)/200)*200;
+    if(hi-lo<400) hi = lo+400;
+    var x=function(k){return g.l+(k/maxKm)*(W-g.l-g.r);}, y=function(a){return g.t+(hi-a)/(hi-lo)*(H-g.t-g.b);};
+    svg.setAttribute("viewBox","0 0 "+W+" "+H);
+    var step = (hi-lo)>800 ? 400 : 200;
+    for(var a=lo; a<=hi; a+=step){
+      svg.appendChild(el("line",{x1:g.l,x2:W-g.r,y1:y(a),y2:y(a),stroke:"rgba(244,246,245,.15)","stroke-width":1}));
+      svg.appendChild(el("text",{x:g.l-6,y:y(a)+4,"text-anchor":"end",fill:"#b9c4bf","font-size":11,"font-family":"Barlow Condensed, Arial Narrow, sans-serif"},a+" m"));
+    }
+    var kmStep = maxKm>10 ? 4 : 2;
+    for(var k=0; k<=maxKm+0.01; k+=kmStep){
+      svg.appendChild(el("text",{x:x(k),y:H-8,"text-anchor":"middle",fill:"#b9c4bf","font-size":11,"font-family":"Barlow Condensed, Arial Narrow, sans-serif"},k+" km"));
+    }
+    var line = pts.map(function(p,i){return (i?"L":"M")+x(p[0]).toFixed(1)+" "+y(p[1]).toFixed(1);}).join(" ");
+    var area = line+" L"+x(maxKm).toFixed(1)+" "+y(lo)+" L"+x(0)+" "+y(lo)+" Z";
+    svg.appendChild(el("path",{d:area,fill:"rgba(197,143,61,.28)"}));
+    svg.appendChild(el("path",{d:line,fill:"none",stroke:"#C58F3D","stroke-width":2.5,"stroke-linejoin":"round"}));
+    var top = pts.reduce(function(m,p){return p[1]>m[1]?p:m;});
+    svg.appendChild(el("circle",{cx:x(top[0]),cy:y(top[1]),r:4.5,fill:"#fff",stroke:"#C58F3D","stroke-width":2}));
+    var anchor = x(top[0]) > W*0.75 ? "end" : (x(top[0]) < W*0.3 ? "start" : "middle");
+    svg.appendChild(el("text",{x:x(top[0]),y:y(top[1])-9,"text-anchor":anchor,fill:"#fff","font-size":12,"font-weight":600,"font-family":"Barlow Condensed, Arial Narrow, sans-serif"},top[1]+" m"));
+  });
+
+  // Choix de la saison
+  var boutons = document.querySelectorAll(".planche[data-saison]");
+  var sections = {hiver:document.getElementById("hiver"), ete:document.getElementById("ete")};
+  function choisir(s, defiler){
+    boutons.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-saison")===s ? "true":"false"); });
+    for(var k in sections) sections[k].hidden = (k!==s);
+    try{ history.replaceState(null,"","#"+s); }catch(e){}
+    if(defiler) sections[s].scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  boutons.forEach(function(b){ b.addEventListener("click", function(){ choisir(b.getAttribute("data-saison"), true); }); });
+  var h = (location.hash||"").replace("#","");
+  var mois = new Date().getMonth(); // novembre à avril : hiver
+  choisir(sections[h] ? h : ((mois>=10 || mois<=3) ? "hiver" : "ete"), false);
+})();
+</script>
+</body>
+</html>

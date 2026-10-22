@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chalet Génie des Alpages, Glières-Val-de-Borne</title>
+<meta name="description" content="Chalet de 135 m² pour 8 personnes au cœur des Aravis, à 7 km du Grand-Bornand et 10 km de La Clusaz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --neige:#F4F6F5;
+    --epicea:#1D3A33;
+    --ardoise:#55636A;
+    --meleze:#C58F3D;
+    --lichen:#DCE3D8;
+    --encre:#16211E;
+    --poteau:#5B4331;
+    --sans:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+    --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+    --wrap:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  body{margin:0;background:var(--neige);color:var(--encre);font:400 1.125rem/1.7 var(--serif)}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--meleze);outline-offset:3px}
+  h1,h2,h3{font-family:var(--sans);font-weight:600;line-height:1.05;margin:0}
+  h2{font-size:clamp(2.2rem,4.5vw,3.4rem);color:var(--epicea);margin-bottom:1.25rem}
+  h3{font-size:1.5rem;color:var(--epicea)}
+  p{margin:0 0 1rem;max-width:62ch}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 1.5rem}
+  section{padding:6rem 0}
+  .photo{background:var(--lichen);overflow:hidden}
+
+  /* Navigation */
+  .nav{position:absolute;inset:0 0 auto 0;z-index:3}
+  .nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:1.25rem;padding-bottom:1.25rem}
+  .brand{font:600 1.35rem var(--sans);color:#fff;text-decoration:none}
+  .nav ul{display:flex;gap:1.75rem;list-style:none;margin:0;padding:0}
+  .nav ul a{color:#fff;text-decoration:none;font:500 1.1rem var(--sans)}
+  .nav ul a:hover{text-decoration:underline;text-underline-offset:4px}
+
+  /* Hero */
+  .hero{position:relative;min-height:90vh;display:flex;align-items:flex-end;color:#fff;background:var(--epicea);padding:0}
+  .hero .photo{position:absolute;inset:0;background:var(--epicea)}
+  .hero .photo img{animation:settle 2.4s ease-out both}
+  @keyframes settle{from{transform:scale(1.06)}to{transform:scale(1)}}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(22,33,30,.82) 0%,rgba(22,33,30,.25) 45%,rgba(22,33,30,.35) 100%)}
+  .hero .wrap{position:relative;z-index:2;padding-bottom:4.5rem;width:100%}
+  .hero h1{font-size:clamp(3.4rem,11vw,9rem);font-weight:700;letter-spacing:-.01em;max-width:10ch}
+  .hero p{font-size:clamp(1.15rem,2vw,1.4rem);margin:1.25rem 0 2rem;max-width:40ch}
+  .actions{display:flex;flex-wrap:wrap;gap:.9rem}
+  .btn{display:inline-block;font:600 1.2rem var(--sans);padding:.8rem 1.6rem;text-decoration:none;border:2px solid var(--meleze)}
+  .btn-plein{background:var(--meleze);color:var(--encre)}
+  .btn-plein:hover{background:#d9a553}
+  .btn-trait{color:#fff;border-color:#fff}
+  .btn-trait:hover{background:rgba(255,255,255,.12)}
+
+  /* Le chalet */
+  .intro{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:start}
+  .fiche{display:grid;grid-template-columns:auto 1fr;gap:.6rem 1.5rem;margin:2rem 0 0;padding:1.5rem 0 0;border-top:2px solid var(--epicea)}
+  .fiche dt{font:600 1.15rem var(--sans);color:var(--ardoise)}
+  .fiche dd{margin:0}
+  .trio{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:260px 200px;gap:.75rem}
+  .trio .photo:first-child{grid-column:1 / 3}
+
+  /* Niveaux */
+  .niveaux{background:var(--lichen)}
+  .coupe{margin-top:2.5rem;border:2px solid var(--epicea);background:var(--neige)}
+  .niveau{display:grid;grid-template-columns:220px 1fr;border-top:2px solid var(--epicea)}
+  .niveau:first-child{border-top:0}
+  .niveau h3{padding:1.5rem;background:var(--epicea);color:var(--neige);font-size:1.6rem}
+  .niveau ul{margin:0;padding:1.5rem 1.5rem 1.5rem 2.75rem}
+  .niveau li{margin:.2rem 0}
+  .note{font-size:1rem;color:var(--ardoise);margin-top:1rem}
+
+  /* Chambres */
+  .chambres{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.5rem}
+  .chambres figure{margin:0}
+  .chambres .photo{aspect-ratio:4/5}
+  .chambres figcaption{padding-top:.75rem;line-height:1.4}
+  .chambres figcaption strong{display:block;font:600 1.3rem var(--sans);color:var(--epicea)}
+
+  /* Autour : panneaux */
+  .autour{background:var(--epicea);color:var(--neige)}
+  .autour h2,.autour h3{color:var(--neige)}
+  .autour-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+  .panneau{position:relative;padding:1.5rem 0 3rem 1.5rem}
+  .panneau::before{content:"";position:absolute;left:1.5rem;top:0;bottom:0;width:18px;background:var(--poteau);border-radius:2px}
+  .planche{position:relative;margin:0 0 .9rem;background:var(--meleze);color:var(--encre);padding:.85rem 3rem .85rem 2.4rem;
+    clip-path:polygon(0 0,calc(100% - 26px) 0,100% 50%,calc(100% - 26px) 100%,0 100%);
+    display:flex;justify-content:space-between;align-items:baseline;gap:1.5rem;font-family:var(--sans)}
+  .planche span{font-size:clamp(1.35rem,2.4vw,1.8rem);font-weight:600}
+  .planche b{font-size:clamp(1.2rem,2vw,1.5rem);font-weight:700;white-space:nowrap}
+  .planche:nth-child(1){width:92%}
+  .planche:nth-child(2){width:82%}
+  .planche:nth-child(3){width:88%}
+  .planche:nth-child(4){width:74%}
+  .saisons{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid rgba(244,246,245,.3)}
+  .saisons p{color:#d5ddd8}
+
+  /* Avis */
+  .avis-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:4rem;align-items:start}
+  .note-globale{font:700 clamp(4rem,9vw,6.5rem)/1 var(--sans);color:var(--epicea)}
+  .criteres{list-style:none;margin:0;padding:0}
+  .criteres li{display:grid;grid-template-columns:9rem 1fr 2.5rem;gap:1rem;align-items:center;padding:.55rem 0;border-bottom:1px solid var(--lichen)}
+  .criteres .barre{height:6px;background:var(--lichen)}
+  .criteres .barre i{display:block;height:100%;background:var(--epicea)}
+  .criteres b{font-family:var(--sans);font-size:1.2rem;text-align:right}
+
+  /* Infos pratiques */
+  .pratique{background:var(--lichen)}
+  .infos{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem 3rem;margin-top:2rem}
+  .infos p{font-size:1.02rem}
+
+  /* Réserver */
+  .reserver{text-align:left}
+  .reserver .cadre{border:2px solid var(--epicea);padding:3rem;display:grid;grid-template-columns:1.2fr .8fr;gap:3rem;align-items:center}
+  .reserver .btn-trait{color:var(--epicea);border-color:var(--epicea)}
+  .reserver .btn-trait:hover{background:var(--lichen)}
+
+  footer{background:var(--encre);color:#b9c4bf;padding:2.5rem 0;font-size:.95rem}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+
+  @media (max-width:900px){
+    section{padding:4.5rem 0}
+    .nav ul{display:none}
+    .intro,.autour-grid,.avis-grid,.reserver .cadre{grid-template-columns:1fr;gap:2.5rem}
+    .chambres{grid-template-columns:1fr 1fr}
+    .infos{grid-template-columns:1fr 1fr}
+    .niveau{grid-template-columns:1fr}
+    .reserver .cadre{padding:2rem}
+  }
+  @media (max-width:560px){
+    .saisons,.infos{grid-template-columns:1fr}
+    .planche{width:100%!important}
+    .criteres li{grid-template-columns:7rem 1fr 2.5rem}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Génie des Alpages</a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="#chalet">Le chalet</a></li>
+        <li><a href="#espaces">Les espaces</a></li>
+        <li><a href="#autour">Autour</a></li>
+        <li><a href="activites.html">Activités</a></li>
+        <li><a href="#pratique">Infos pratiques</a></li>
+        <li><a href="#reserver">Réserver</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="photo">
+      <img src="images/chalet-hero.jpg" alt="Le chalet Génie des Alpages face aux montagnes des Aravis" onerror="this.style.display='none'">
+    </div>
+    <div class="wrap">
+      <h1>Génie des Alpages</h1>
+      <p>Un chalet de 135 m² pour 8 personnes, au calme, entre Le Grand-Bornand et La Clusaz.</p>
+      <div class="actions">
+        <a class="btn btn-plein" href="#reserver">Voir les disponibilités</a>
+        <a class="btn btn-trait" href="#espaces">Découvrir le chalet</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="chalet">
+    <div class="wrap intro">
+      <div>
+        <h2>Un chalet récent, pensé pour se retrouver</h2>
+        <p>Construit en 2020, le chalet se déploie sur trois niveaux. La pièce de vie, largement vitrée, ouvre sur le balcon et la montagne. Les chambres sont regroupées au rez de jardin, avec un accès direct au jardin.</p>
+        <p>Le secteur est calme et les sentiers de randonnée partent devant la porte. Les pistes du Grand-Bornand et de La Clusaz sont à une dizaine de minutes en voiture.</p>
+        <dl class="fiche">
+          <dt>Surface</dt><dd>135 m² sur trois niveaux</dd>
+          <dt>Capacité</dt><dd>8 voyageurs</dd>
+          <dt>Couchages</dt><dd>4 chambres, 6 lits</dd>
+          <dt>Salles de bain</dt><dd>2, plus 2 WC indépendants</dd>
+          <dt>Stationnement</dt><dd>Privé, 4 places</dd>
+          <dt>Vue</dt><dd>Montagne et jardin</dd>
+        </dl>
+      </div>
+      <div class="trio">
+        <div class="photo"><img src="images/chalet-1.jpg" alt="Photo du chalet" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="photo"><img src="images/chalet-2.jpg" alt="Photo du chalet" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="photo"><img src="images/chalet-3.jpg" alt="Photo du chalet" loading="lazy" onerror="this.style.display='none'"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="espaces" class="niveaux">
+    <div class="wrap">
+      <h2>Trois niveaux, du salon de lecture au jardin</h2>
+      <p>Le chalet se lit de haut en bas : les espaces de vie en partie haute, les nuits au calme côté jardin.</p>
+      <div class="coupe">
+        <div class="niveau">
+          <h3>Étage</h3>
+          <ul>
+            <li>Salon et coin lecture</li>
+            <li>Une chambre avec lit double (160 x 200)</li>
+          </ul>
+        </div>
+        <div class="niveau">
+          <h3>Rez de chaussée</h3>
+          <ul>
+            <li>Hall d'entrée avec vestiaire</li>
+            <li>Grande pièce de vie : cuisine équipée ouverte sur la salle à manger et le salon</li>
+            <li>Baies vitrées avec vue sur les montagnes et accès direct au balcon</li>
+            <li>WC indépendant</li>
+          </ul>
+        </div>
+        <div class="niveau">
+          <h3>Rez de jardin</h3>
+          <ul>
+            <li>Deux chambres avec deux lits simples rapprochables (90 x 190)</li>
+            <li>Une chambre avec lit double (160 x 200)</li>
+            <li>Salle de bain avec douche</li>
+            <li>Salle de bain avec baignoire et double vasque</li>
+            <li>WC indépendant et accès au jardin</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chambres">
+        <figure>
+          <div class="photo"><img src="images/chambre-1.jpg" alt="Chambre 1 avec deux lits simples" loading="lazy" onerror="this.style.display='none'"></div>
+          <figcaption><strong>Chambre 1</strong>Deux lits simples rapprochables</figcaption>
+        </figure>
+        <figure>
+          <div class="photo"><img src="images/chambre-2.jpg" alt="Chambre 2 avec lit double" loading="lazy" onerror="this.style.display='none'"></div>
+          <figcaption><strong>Chambre 2</strong>Un lit double</figcaption>
+        </figure>
+        <figure>
+          <div class="photo"><img src="images/chambre-3.jpg" alt="Chambre 3 avec lit double" loading="lazy" onerror="this.style.display='none'"></div>
+          <figcaption><strong>Chambre 3</strong>Un lit double</figcaption>
+        </figure>
+        <figure>
+          <div class="photo"><img src="images/chambre-4.jpg" alt="Chambre 4 avec deux lits simples" loading="lazy" onerror="this.style.display='none'"></div>
+          <figcaption><strong>Chambre 4</strong>Deux lits simples rapprochables</figcaption>
+        </figure>
+      </div>
+      <p class="note">Draps et serviettes fournis, lits faits à votre arrivée.</p>
+    </div>
+  </section>
+
+  <section id="autour" class="autour">
+    <div class="wrap">
+      <div class="autour-grid">
+        <div>
+          <h2>Au cœur du massif des Aravis</h2>
+          <p>Le chalet est situé à Glières-Val-de-Borne, en Haute-Savoie. Loin du bruit des stations, il reste à portée de voiture des pistes, des commerces du Grand-Bornand et du lac d'Annecy.</p>
+        </div>
+        <div class="panneau" role="list" aria-label="Distances depuis le chalet">
+          <div class="planche" role="listitem"><span>Sentiers de randonnée</span><b>devant le chalet</b></div>
+          <div class="planche" role="listitem"><span>Le Grand-Bornand</span><b>7 km</b></div>
+          <div class="planche" role="listitem"><span>La Clusaz</span><b>10 km</b></div>
+          <div class="planche" role="listitem"><span>Annecy</span><b>35 km</b></div>
+        </div>
+      </div>
+      <div class="saisons">
+        <div>
+          <h3>L'hiver</h3>
+          <p>Ski alpin et snowboard au Grand-Bornand et à La Clusaz, raquettes au départ des villages. L'accès au chalet nécessite des équipements spéciaux en hiver : pneus neige ou chaînes.</p>
+        </div>
+        <div>
+          <h3>L'été</h3>
+          <p>Randonnée dès la sortie du chalet, pour tous les niveaux. Boulangerie, boucherie et épicerie au Grand-Bornand, à 7 km. Annecy et son lac à environ 35 km.</p>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:2.5rem"><a class="btn btn-plein" href="activites.html">Voir les activités, été comme hiver</a></div>
+    </div>
+  </section>
+
+  <section id="avis">
+    <div class="wrap avis-grid">
+      <div>
+        <h2>Ce qu'en pensent les voyageurs</h2>
+        <div class="note-globale">4,97</div>
+        <p>Note moyenne sur 5, à partir de 37 avis publiés sur Airbnb. Les voyageurs citent le plus souvent la vue, l'emplacement et l'accueil.</p>
+      </div>
+      <ul class="criteres" aria-label="Notes par critère, sur 5">
+        <li><span>Propreté</span><span class="barre"><i style="width:98%"></i></span><b>4,9</b></li>
+        <li><span>Précision</span><span class="barre"><i style="width:100%"></i></span><b>5,0</b></li>
+        <li><span>Arrivée</span><span class="barre"><i style="width:100%"></i></span><b>5,0</b></li>
+        <li><span>Communication</span><span class="barre"><i style="width:98%"></i></span><b>4,9</b></li>
+        <li><span>Emplacement</span><span class="barre"><i style="width:94%"></i></span><b>4,7</b></li>
+        <li><span>Qualité prix</span><span class="barre"><i style="width:96%"></i></span><b>4,8</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="pratique" class="pratique">
+    <div class="wrap">
+      <h2>Infos pratiques</h2>
+      <div class="infos">
+        <div><h3>Inclus</h3><p>Linge de maison, lits faits à l'arrivée, wifi, cafetière filtre et machine à expresso.</p></div>
+        <div><h3>Sur place</h3><p>Une conciergerie reste joignable pendant tout votre séjour.</p></div>
+        <div><h3>Accès</h3><p>Stationnement privé pour 4 véhicules. En hiver, prévoyez pneus neige ou chaînes.</p></div>
+        <div><h3>Dépôt de garantie</h3><p>Empreinte bancaire de 800 € avant l'arrivée. Le montant n'est pas débité.</p></div>
+        <div><h3>Animaux</h3><p>Les animaux ne sont pas acceptés dans le chalet.</p></div>
+        <div><h3>Capacité</h3><p>8 personnes maximum. Le dépassement entraîne une retenue sur le dépôt de garantie.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reserver" class="reserver">
+    <div class="wrap">
+      <div class="cadre">
+        <div>
+          <h2>Réserver votre séjour</h2>
+          <p>Consultez les disponibilités et les tarifs en ligne, ou écrivez nous pour une question sur le chalet ou une demande de groupe.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-plein" href="https://www.airbnb.fr/rooms/47149684" target="_blank" rel="noopener">Voir les disponibilités</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Chalet Génie des Alpages, Glières-Val-de-Borne, Haute-Savoie</span>
+  </div>
+</footer>
+
+</body>
+</html>

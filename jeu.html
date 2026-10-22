@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Slalom des Aravis</title>
+<meta name="description" content="Petit jeu de slalom : passez les portes le plus vite possible entre les épicéas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+  /* Même identité que le site : neige, épicéa, mélèze ; portes rouges et bleues comme en course */
+  :root{
+    --neige:#F4F6F5;
+    --epicea:#1D3A33;
+    --ardoise:#55636A;
+    --meleze:#C58F3D;
+    --lichen:#DCE3D8;
+    --encre:#16211E;
+    --rouge:#C23B2E;
+    --bleue:#2462B3;
+    --sans:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+    --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--neige);color:var(--encre);font:400 1.0625rem/1.6 var(--serif)}
+  a{color:inherit}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--meleze);outline-offset:3px}
+  .wrap{max-width:760px;margin:0 auto;padding-left:max(1rem,env(safe-area-inset-left,0px));padding-right:max(1rem,env(safe-area-inset-right,0px))}
+  .tete{background:var(--epicea);color:var(--neige)}
+  .tete nav{display:flex;justify-content:space-between;gap:1rem;padding-block:1.1rem}
+  .tete nav a{font:500 1.1rem var(--sans);color:#fff;text-decoration:none}
+  .tete nav a:hover{text-decoration:underline;text-underline-offset:4px}
+  .tete h1{font:700 clamp(2.6rem,8vw,4.5rem)/1 var(--sans);margin:0;padding-block:1rem 0;color:#fff}
+  .tete p{color:#d5ddd8;margin:.6rem 0 0;padding-bottom:1.75rem;max-width:56ch}
+
+  main{padding-block:1.5rem 3rem}
+  .hud{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.75rem}
+  .hud div{background:#fff;border:2px solid var(--epicea);padding:.4rem .75rem}
+  .hud dt{font:600 .85rem var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--ardoise)}
+  .hud dd{margin:0;font:700 1.7rem/1.1 var(--sans);color:var(--epicea);font-variant-numeric:tabular-nums}
+  .piste,.commandes{max-width:min(100%,calc(74vh / 1.4));margin-inline:auto}
+  .piste{position:relative;border:2px solid var(--epicea);background:#fff;touch-action:none;user-select:none;-webkit-user-select:none}
+  canvas{display:block;width:100%;height:auto}
+  .ecran{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.9rem;text-align:center;
+    background:rgba(244,246,245,.88);padding:1.5rem}
+  .ecran[hidden]{display:none}
+  .ecran h2{font:700 clamp(2rem,6vw,3rem)/1 var(--sans);color:var(--epicea);margin:0}
+  .ecran p{margin:0;max-width:40ch}
+  .resultat{font:700 3rem/1 var(--sans);color:var(--epicea);font-variant-numeric:tabular-nums}
+  .detail{font-size:.95rem;color:var(--ardoise)}
+  .btn{font:600 1.35rem var(--sans);padding:.7rem 1.8rem;border:2px solid var(--meleze);background:var(--meleze);color:var(--encre);cursor:pointer}
+  .btn:hover{background:#d9a553}
+  .commandes{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.75rem}
+  .commandes button{font:700 1.6rem var(--sans);padding:.9rem;border:2px solid var(--epicea);background:#fff;color:var(--epicea);cursor:pointer;touch-action:none}
+  .commandes button.actif{background:var(--epicea);color:#fff}
+  .aide{font-size:.95rem;color:var(--ardoise);margin-top:1rem}
+  kbd{font:600 .95rem var(--sans);border:1px solid var(--ardoise);border-bottom-width:2px;padding:0 .35rem;border-radius:3px;background:#fff}
+  @media (hover:hover) and (pointer:fine){.commandes{display:none}}
+</style>
+</head>
+<body>
+
+<header class="tete">
+  <div class="wrap">
+    <nav aria-label="Navigation">
+      <a href="index.html">← Le chalet</a>
+      <a href="activites.html#hiver">Activités</a>
+    </nav>
+    <h1>Slalom des Aravis</h1>
+    <p>Passez les 20 portes le plus vite possible entre les épicéas. Une porte manquée coûte 5 secondes, un épicéa vous fait chuter.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <dl class="hud">
+    <div><dt>Temps</dt><dd id="temps">0,00</dd></div>
+    <div><dt>Portes</dt><dd id="portes">0 / 20</dd></div>
+    <div><dt>Meilleur</dt><dd id="record">–</dd></div>
+  </dl>
+
+  <div class="piste" id="piste">
+    <canvas id="jeu" width="760" height="900" aria-label="Piste de slalom"></canvas>
+    <div class="ecran" id="ecran-depart">
+      <h2>Au portillon</h2>
+      <p>Passez entre les deux piquets de chaque porte, rouges ou bleus.</p>
+      <button class="btn" id="partir" type="button">Départ</button>
+      <p class="detail">Clavier : <kbd>←</kbd> <kbd>→</kbd> · Mobile : touchez la gauche ou la droite de la piste</p>
+    </div>
+    <div class="ecran" id="ecran-fin" hidden>
+      <h2 id="fin-titre">Arrivée</h2>
+      <div class="resultat" id="fin-temps">0,00 s</div>
+      <p class="detail" id="fin-detail"></p>
+      <button class="btn" id="rejouer" type="button">Rejouer</button>
+    </div>
+  </div>
+
+  <div class="commandes" aria-hidden="true">
+    <button type="button" id="btn-g">◀</button>
+    <button type="button" id="btn-d">▶</button>
+  </div>
+  <p class="aide">Astuce : coupez au plus près des piquets, mais un virage trop serré vous ralentit.</p>
+</main>
+
+<script>
+(function(){
+  var cv = document.getElementById("jeu"), ctx = cv.getContext("2d");
+  var W = 400, H = 560;           // monde logique
+  var NB_PORTES = 20, ECART = 190, LARGEUR_PORTE = 74, PENALITE = 5;
+  var SKIEUR_Y = 150;             // position du skieur à l'écran
+  var el = function(id){ return document.getElementById(id); };
+  var ecranDepart = el("ecran-depart"), ecranFin = el("ecran-fin");
+
+  function taille(){
+    var r = window.devicePixelRatio || 1, w = cv.clientWidth || 760;
+    cv.width = Math.round(w*r); cv.height = Math.round(w*(H/W)*r);
+  }
+  window.addEventListener("resize", function(){ taille(); dessiner(); });
+  taille();
+
+  function lireRecord(){ try{ return parseFloat(localStorage.getItem("slalom-record")) || null; }catch(e){ return null; } }
+  function ecrireRecord(t){ try{ localStorage.setItem("slalom-record", String(t)); }catch(e){} }
+  function fmt(t){ return t.toFixed(2).replace(".", ","); }
+  var record = lireRecord();
+  el("record").textContent = record ? fmt(record) : "–";
+
+  var etat, s;
+  function piste(){
+    var portes = [], arbres = [], x = W/2;
+    for(var i=0;i<NB_PORTES;i++){
+      var cote = i%2 ? 1 : -1;
+      x = W/2 + cote*(50 + Math.random()*70);
+      portes.push({y: 420 + i*ECART, x: x, couleur: i%2 ? "#2462B3" : "#C23B2E", etat: 0});
+    }
+    var fin = 420 + NB_PORTES*ECART + 120;
+    for(var y=80; y<fin+300; y+=34){
+      arbres.push({x: 6+Math.random()*30, y: y+Math.random()*20, r: 14+Math.random()*6});
+      arbres.push({x: W-6-Math.random()*30, y: y+Math.random()*20, r: 14+Math.random()*6});
+    }
+    // quelques épicéas isolés, loin des portes
+    for(var k=1;k<NB_PORTES;k++){
+      if(Math.random()<0.55){
+        var g = portes[k], tx = g.x > W/2 ? 70+Math.random()*40 : W-110+Math.random()*40;
+        arbres.push({x:tx, y:g.y - ECART/2 + (Math.random()*40-20), r:13});
+      }
+    }
+    return {portes: portes, arbres: arbres, fin: fin};
+  }
+
+  function reset(){
+    var p = piste();
+    s = {x: W/2, vx: 0, d: 0, v: 170, t: 0, pen: 0, passees: 0, chute: 0,
+         portes: p.portes, arbres: p.arbres, fin: p.fin, trace: [], prochaine: 0};
+    majHud();
+  }
+
+  var dir = 0, gauche = false, droite = false;
+  function majDir(){ dir = (droite?1:0) - (gauche?1:0); el("btn-g").classList.toggle("actif",gauche); el("btn-d").classList.toggle("actif",droite); }
+  document.addEventListener("keydown", function(e){
+    if(e.key==="ArrowLeft"||e.key==="q"||e.key==="a"){ gauche=true; majDir(); e.preventDefault(); }
+    if(e.key==="ArrowRight"||e.key==="d"){ droite=true; majDir(); e.preventDefault(); }
+    if((e.key===" "||e.key==="Enter") && etat!=="course"){ e.preventDefault(); demarrer(); }
+  });
+  document.addEventListener("keyup", function(e){
+    if(e.key==="ArrowLeft"||e.key==="q"||e.key==="a"){ gauche=false; majDir(); }
+    if(e.key==="ArrowRight"||e.key==="d"){ droite=false; majDir(); }
+  });
+  // tactile : moitié gauche / droite de la piste, et boutons
+  var pointeurs = {};
+  function majPointeurs(){ gauche=false; droite=false; for(var id in pointeurs){ if(pointeurs[id]<0) gauche=true; else droite=true; } majDir(); }
+  el("piste").addEventListener("pointerdown", function(e){
+    if(etat!=="course") return;
+    var r = this.getBoundingClientRect(); pointeurs[e.pointerId] = (e.clientX < r.left + r.width/2) ? -1 : 1; majPointeurs();
+  });
+  ["btn-g","btn-d"].forEach(function(id,i){
+    el(id).addEventListener("pointerdown", function(e){ e.preventDefault(); pointeurs[e.pointerId] = i ? 1 : -1; majPointeurs(); });
+  });
+  ["pointerup","pointercancel","pointerleave"].forEach(function(t){
+    document.addEventListener(t, function(e){ if(t==="pointerleave" && e.pointerType==="mouse") return; delete pointeurs[e.pointerId]; majPointeurs(); });
+  });
+
+  function demarrer(){ reset(); etat = "course"; ecranDepart.hidden = true; ecranFin.hidden = true; dernier = performance.now(); }
+  el("partir").addEventListener("click", demarrer);
+  el("rejouer").addEventListener("click", demarrer);
+
+  function majHud(){
+    el("temps").textContent = fmt(s.t + s.pen);
+    el("portes").textContent = s.passees + " / " + NB_PORTES;
+  }
+
+  function terminer(){
+    etat = "fin";
+    var total = s.t + s.pen, manquees = NB_PORTES - s.passees;
+    var nouveau = !record || total < record;
+    if(nouveau){ record = total; ecrireRecord(total); el("record").textContent = fmt(total); }
+    el("fin-titre").textContent = nouveau ? "Nouveau record !" : "Arrivée";
+    el("fin-temps").textContent = fmt(total) + " s";
+    el("fin-detail").textContent = "Temps de course " + fmt(s.t) + " s · " +
+      (manquees ? manquees + " porte" + (manquees>1?"s":"") + " manquée" + (manquees>1?"s":"") + " (+" + manquees*PENALITE + " s)" : "aucune porte manquée") +
+      (nouveau ? "" : " · Record : " + fmt(record) + " s");
+    ecranFin.hidden = false;
+    el("rejouer").focus();
+  }
+
+  function maj(dt){
+    s.t += dt;
+    if(s.chute > 0){ s.chute -= dt; s.v = 60; }
+    else {
+      s.vx += dir * 900 * dt;
+      s.vx *= Math.pow(0.08, dt);
+      s.vx = Math.max(-260, Math.min(260, s.vx));
+      var cible = 230 + Math.min(s.d/40, 150) - Math.abs(s.vx)*0.35;
+      s.v += (cible - s.v) * Math.min(1, dt*1.5);
+    }
+    var avant = s.d;
+    s.d += s.v * dt;
+    s.x += s.vx * dt;
+    if(s.x < 22){ s.x = 22; s.vx = 0; } if(s.x > W-22){ s.x = W-22; s.vx = 0; }
+
+    s.trace.push({x:s.x, y:s.d}); if(s.trace.length > 160) s.trace.shift();
+
+    // portes franchies
+    var g = s.portes[s.prochaine];
+    if(g && avant < g.y && s.d >= g.y){
+      if(Math.abs(s.x - g.x) <= LARGEUR_PORTE/2){ g.etat = 1; s.passees++; }
+      else { g.etat = -1; s.pen += PENALITE; }
+      s.prochaine++;
+    }
+    // épicéas
+    if(s.chute <= 0){
+      for(var i=0;i<s.arbres.length;i++){
+        var a = s.arbres[i]; if(Math.abs(a.y - s.d) > 30) continue;
+        var dx = a.x - s.x, dy = a.y - s.d;
+        if(dx*dx + dy*dy < (a.r*0.75+8)*(a.r*0.75+8)){ s.chute = 1.2; s.vx = -s.vx*0.4; break; }
+      }
+    }
+    majHud();
+    if(s.d >= s.fin) terminer();
+  }
+
+  function sapin(x, y, r){
+    ctx.fillStyle = "#16211E"; ctx.globalAlpha = .12;
+    ctx.beginPath(); ctx.ellipse(x+5, y+r*0.9, r*0.8, r*0.25, 0, 0, Math.PI*2); ctx.fill(); ctx.globalAlpha = 1;
+    ctx.fillStyle = "#5B4331"; ctx.fillRect(x-2, y+r*0.5, 4, r*0.5);
+    ctx.fillStyle = "#1D3A33";
+    for(var k=0;k<3;k++){
+      var w = r*(1-k*0.25), yy = y + r*0.6 - k*r*0.55;
+      ctx.beginPath(); ctx.moveTo(x, yy - r*0.9); ctx.lineTo(x+w, yy); ctx.lineTo(x-w, yy); ctx.closePath(); ctx.fill();
+    }
+    ctx.fillStyle = "#F4F6F5";
+    ctx.beginPath(); ctx.moveTo(x, y - r*1.4); ctx.lineTo(x+r*0.3, y-r*1.0); ctx.lineTo(x-r*0.3, y-r*1.0); ctx.closePath(); ctx.fill();
+  }
+
+  function porte(g, sy){
+    var xs = [g.x - LARGEUR_PORTE/2, g.x + LARGEUR_PORTE/2];
+    ctx.globalAlpha = g.etat === -1 ? 0.35 : 1;
+    xs.forEach(function(px, i){
+      ctx.strokeStyle = g.couleur; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(px, sy); ctx.lineTo(px, sy-34); ctx.stroke();
+      ctx.fillStyle = g.couleur;
+      var sens = i ? -1 : 1;
+      ctx.beginPath(); ctx.moveTo(px, sy-34); ctx.lineTo(px + sens*18, sy-28); ctx.lineTo(px, sy-21); ctx.closePath(); ctx.fill();
+    });
+    if(g.etat === 1){ ctx.strokeStyle = "rgba(47,138,78,.6)"; ctx.lineWidth = 2; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(xs[0], sy); ctx.lineTo(xs[1], sy); ctx.stroke(); ctx.setLineDash([]); }
+    ctx.globalAlpha = 1;
+  }
+
+  function skieur(){
+    var angle = Math.max(-0.9, Math.min(0.9, s.vx/240));
+    ctx.save(); ctx.translate(s.x, SKIEUR_Y);
+    if(s.chute > 0) ctx.rotate(Math.sin(s.chute*12)*0.6 + 1.2);
+    ctx.save(); ctx.rotate(-angle);
+    ctx.strokeStyle = "#16211E"; ctx.lineWidth = 3; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(-5, -14); ctx.lineTo(-5, 14); ctx.moveTo(5, -14); ctx.lineTo(5, 14); ctx.stroke();
+    ctx.restore();
+    ctx.fillStyle = "#C58F3D"; ctx.beginPath(); ctx.ellipse(0, 0, 9, 7, -angle*0.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = "#1D3A33"; ctx.beginPath(); ctx.arc(-angle*2, 4, 4.5, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = "#55636A"; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(-9, 0); ctx.lineTo(-13, -12); ctx.moveTo(9, 0); ctx.lineTo(13, -12); ctx.stroke();
+    ctx.restore();
+  }
+
+  function dessiner(){
+    var sc = cv.width / W;
+    ctx.setTransform(sc,0,0,sc,0,0);
+    ctx.fillStyle = "#F4F6F5"; ctx.fillRect(0,0,W,H);
+    if(!s) return;
+    var off = SKIEUR_Y - s.d;
+    // traces de ski
+    ctx.strokeStyle = "rgba(85,99,106,.25)"; ctx.lineWidth = 1.2;
+    [-4,4].forEach(function(o){
+      ctx.beginPath();
+      s.trace.forEach(function(p,i){ var y = p.y + off - 8; if(i) ctx.lineTo(p.x+o, y); else ctx.moveTo(p.x+o, y); });
+      ctx.stroke();
+    });
+    // ligne d'arrivée
+    var fy = s.fin + off;
+    if(fy > -20 && fy < H+20){
+      for(var i=0;i<W;i+=20){ ctx.fillStyle = (i/20)%2 ? "#16211E" : "#F4F6F5"; ctx.fillRect(i, fy-6, 20, 6); ctx.fillStyle = (i/20)%2 ? "#F4F6F5" : "#16211E"; ctx.fillRect(i, fy, 20, 6); }
+      ctx.fillStyle = "#1D3A33"; ctx.font = "700 22px 'Barlow Condensed', Arial Narrow, sans-serif"; ctx.textAlign = "center";
+      ctx.fillText("ARRIVÉE", W/2, fy - 14);
+    }
+    s.portes.forEach(function(g){ var y = g.y + off; if(y > -40 && y < H+40) porte(g, y); });
+    var proches = s.arbres.filter(function(a){ var y=a.y+off; return y > -40 && y < H+40; }).sort(function(a,b){return a.y-b.y;});
+    proches.forEach(function(a){ if(a.y < s.d) sapin(a.x, a.y+off, a.r); });
+    skieur();
+    proches.forEach(function(a){ if(a.y >= s.d) sapin(a.x, a.y+off, a.r); });
+  }
+
+  var dernier = performance.now();
+  function boucle(now){
+    var dt = Math.min(0.05, (now - dernier)/1000); dernier = now;
+    if(etat === "course") maj(dt);
+    dessiner();
+    requestAnimationFrame(boucle);
+  }
+  reset(); etat = "attente";
+  requestAnimationFrame(boucle);
+})();
+</script>
+</body>
+</html>

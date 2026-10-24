@@ -28,10 +28,7 @@
   a:focus-visible,button:focus-visible{outline:3px solid var(--meleze);outline-offset:3px}
   .wrap{max-width:760px;margin:0 auto;padding-left:max(1rem,env(safe-area-inset-left,0px));padding-right:max(1rem,env(safe-area-inset-right,0px))}
   .tete{background:var(--epicea);color:var(--neige)}
-  .tete nav{display:flex;justify-content:space-between;gap:1rem;padding-block:1.1rem}
-  .tete nav a{font:500 1.1rem var(--sans);color:#fff;text-decoration:none}
-  .tete nav a:hover{text-decoration:underline;text-underline-offset:4px}
-  .tete h1{font:700 clamp(2.6rem,8vw,4.5rem)/1 var(--sans);margin:0;padding-block:1rem 0;color:#fff}
+  .tete h1{font:700 clamp(2.4rem,8vw,4.5rem)/1 var(--sans);margin:0;padding-block:1.5rem 0;color:#fff}
   .tete p{color:#d5ddd8;margin:.6rem 0 0;padding-bottom:1.75rem;max-width:56ch}
 
   main{padding-block:1.5rem 3rem}
@@ -57,20 +54,72 @@
   .aide{font-size:.95rem;color:var(--ardoise);margin-top:1rem}
   kbd{font:600 .95rem var(--sans);border:1px solid var(--ardoise);border-bottom-width:2px;padding:0 .35rem;border-radius:3px;background:#fff}
   @media (hover:hover) and (pointer:fine){.commandes{display:none}}
+
+  /* Barre de navigation commune aux trois pages */
+  .site-nav{position:sticky;top:0;z-index:50;background:var(--epicea);color:#fff;padding-top:env(safe-area-inset-top,0px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+  .sn-wrap{position:relative;max-width:1120px;margin:0 auto;padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1.25rem,env(safe-area-inset-right,0px));
+    display:flex;align-items:center;gap:1rem;min-height:62px}
+  .sn-liens{display:flex;align-items:center;gap:1.4rem;list-style:none;margin:0 0 0 auto;padding:0}
+  .sn-liens a{display:inline-block;color:#fff;text-decoration:none;font:500 1.12rem/1.2 "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.35rem 0;border-bottom:2px solid transparent}
+  .sn-liens a:hover{border-bottom-color:rgba(197,143,61,.6)}
+  .sn-liens a[aria-current]{border-bottom-color:var(--meleze)}
+  .sn-cta,.sn-liens a.sn-cta{background:var(--meleze);color:var(--encre);font:600 1.12rem/1.2 "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.5rem 1rem;border:0;text-decoration:none}
+  .sn-cta:hover,.sn-liens a.sn-cta:hover{background:#d9a553}
+  .sn-bouton,.sn-cta-mobile{display:none}
+  .sn-bouton{align-items:center;gap:.55rem;background:none;border:2px solid rgba(255,255,255,.45);color:#fff;font:600 1.15rem/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.5rem .85rem;cursor:pointer;min-height:44px}
+  .sn-icone{position:relative;width:18px;height:2px;background:currentColor;transition:background .15s}
+  .sn-icone::before,.sn-icone::after{content:"";position:absolute;left:0;width:18px;height:2px;background:currentColor;transition:transform .15s}
+  .sn-icone::before{top:-6px}.sn-icone::after{top:6px}
+  .site-nav.ouvert .sn-icone{background:transparent}
+  .site-nav.ouvert .sn-icone::before{transform:translateY(6px) rotate(45deg)}
+  .site-nav.ouvert .sn-icone::after{transform:translateY(-6px) rotate(-45deg)}
+  [id]{scroll-margin-top:76px}
+  @media (max-width:960px){
+    .sn-bouton{display:inline-flex}
+    .sn-cta-mobile{display:inline-block;margin-left:auto;min-height:44px;line-height:1.6}
+    .sn-liens{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;margin:0;
+      background:var(--epicea);padding:.25rem max(1.25rem,env(safe-area-inset-left,0px)) 1.25rem;border-top:1px solid rgba(255,255,255,.15);
+      box-shadow:0 18px 30px rgba(22,33,30,.35);max-height:calc(100vh - 62px);overflow-y:auto}
+    .site-nav.ouvert .sn-liens{display:flex}
+    .sn-liens a{display:block;padding:.9rem 0;font-size:1.4rem;border-bottom:1px solid rgba(255,255,255,.12)}
+    .sn-liens a[aria-current]{border-bottom-color:rgba(255,255,255,.12);color:var(--meleze)}
+    .sn-liens li.sn-li-cta{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.sn-icone,.sn-icone::before,.sn-icone::after{transition:none}}
+
+  .pied{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem 2rem}
+  .pied-liens{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem}
+  .pied-liens a{color:#d5ddd8;text-decoration:none;font:500 1.05rem "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.25rem 0}
+  .pied-liens a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+  footer{background:var(--encre);color:#b9c4bf;padding-block:2rem;font-size:.95rem}
+  footer .wrap{max-width:1120px}
 </style>
 </head>
 <body>
 
-<header class="tete">
+<header class="site-nav" id="site-nav">
+  <div class="sn-wrap">
+    <button class="sn-bouton" type="button" aria-expanded="false" aria-controls="sn-liens"><span class="sn-icone" aria-hidden="true"></span>Menu</button>
+    <a class="sn-cta sn-cta-mobile" href="index.html#reserver">Réserver</a>
+    <ul class="sn-liens" id="sn-liens" aria-label="Navigation principale">
+      <li><a href="index.html#top">Le chalet</a></li>
+      <li><a href="index.html#espaces">Les espaces</a></li>
+      <li><a href="index.html#autour">Autour</a></li>
+      <li><a href="activites.html">Activités</a></li>
+      <li><a href="#top" aria-current="page">Jeu de slalom</a></li>
+      <li><a href="index.html#pratique">Infos pratiques</a></li>
+      <li class="sn-li-cta"><a class="sn-cta" href="index.html#reserver">Réserver</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="tete" id="top">
   <div class="wrap">
-    <nav aria-label="Navigation">
-      <a href="index.html">← Le chalet</a>
-      <a href="activites.html#hiver">Activités</a>
-    </nav>
     <h1>Slalom des Aravis</h1>
     <p>Passez les 20 portes le plus vite possible entre les épicéas. Une porte manquée coûte 5 secondes, un épicéa vous fait chuter.</p>
   </div>
-</header>
+</div>
 
 <main class="wrap">
   <dl class="hud">
@@ -101,6 +150,19 @@
   </div>
   <p class="aide">Astuce : coupez au plus près des piquets, mais un virage trop serré vous ralentit.</p>
 </main>
+
+<footer>
+  <div class="wrap pied">
+    <span>Chalet Génie des Alpages, Glières-Val-de-Borne, Haute-Savoie</span>
+    <nav aria-label="Liens de bas de page" class="pied-liens">
+      <a href="index.html#top">Le chalet</a>
+      <a href="activites.html">Activités</a>
+      <a href="jeu.html">Jeu de slalom</a>
+      <a href="index.html#pratique">Infos pratiques</a>
+      <a href="index.html#reserver">Réserver</a>
+    </nav>
+  </div>
+</footer>
 
 <script>
 (function(){
@@ -317,6 +379,18 @@
   }
   reset(); etat = "attente";
   requestAnimationFrame(boucle);
+})();
+</script>
+<script>
+(function(){
+  var nav=document.getElementById("site-nav"); if(!nav) return;
+  var btn=nav.querySelector(".sn-bouton");
+  function fermer(){ nav.classList.remove("ouvert"); btn.setAttribute("aria-expanded","false"); }
+  btn.addEventListener("click",function(){ var o=!nav.classList.contains("ouvert"); nav.classList.toggle("ouvert",o); btn.setAttribute("aria-expanded",o?"true":"false"); });
+  nav.querySelectorAll(".sn-liens a").forEach(function(a){ a.addEventListener("click",fermer); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape" && nav.classList.contains("ouvert")){ fermer(); btn.focus(); } });
+  document.addEventListener("click",function(e){ if(!nav.contains(e.target)) fermer(); });
+  window.addEventListener("resize",function(){ if(window.innerWidth>960) fermer(); });
 })();
 </script>
 </body>

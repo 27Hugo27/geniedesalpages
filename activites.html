@@ -40,10 +40,6 @@
 
   /* En-tête */
   .tete{background:var(--epicea);color:var(--neige)}
-  .tete nav{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:1.25rem}
-  .brand{font:600 1.35rem var(--sans);color:#fff;text-decoration:none}
-  .retour{font:500 1.1rem var(--sans);color:#fff;text-decoration:none}
-  .retour:hover{text-decoration:underline;text-underline-offset:4px}
   .tete .intro{padding-block:2.5rem 3.5rem;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:end}
   .tete h1{font-size:clamp(3rem,8vw,6rem);font-weight:700;color:#fff}
   .tete p{color:#d5ddd8;margin:1rem 0 0;font-size:1.15rem}
@@ -128,16 +124,80 @@
     .chiffres{grid-template-columns:repeat(2,1fr)}
     .planche{font-size:1.6rem}
   }
+
+  /* Barre de navigation commune aux trois pages */
+  .site-nav{position:sticky;top:0;z-index:50;background:var(--epicea);color:#fff;padding-top:env(safe-area-inset-top,0px);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+  .sn-wrap{position:relative;max-width:1120px;margin:0 auto;padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1.25rem,env(safe-area-inset-right,0px));
+    display:flex;align-items:center;gap:1rem;min-height:62px}
+  .sn-liens{display:flex;align-items:center;gap:1.4rem;list-style:none;margin:0 0 0 auto;padding:0}
+  .sn-liens a{display:inline-block;color:#fff;text-decoration:none;font:500 1.12rem/1.2 "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.35rem 0;border-bottom:2px solid transparent}
+  .sn-liens a:hover{border-bottom-color:rgba(197,143,61,.6)}
+  .sn-liens a[aria-current]{border-bottom-color:var(--meleze)}
+  .sn-cta,.sn-liens a.sn-cta{background:var(--meleze);color:var(--encre);font:600 1.12rem/1.2 "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.5rem 1rem;border:0;text-decoration:none}
+  .sn-cta:hover,.sn-liens a.sn-cta:hover{background:#d9a553}
+  .sn-bouton,.sn-cta-mobile{display:none}
+  .sn-bouton{align-items:center;gap:.55rem;background:none;border:2px solid rgba(255,255,255,.45);color:#fff;font:600 1.15rem/1 "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.5rem .85rem;cursor:pointer;min-height:44px}
+  .sn-icone{position:relative;width:18px;height:2px;background:currentColor;transition:background .15s}
+  .sn-icone::before,.sn-icone::after{content:"";position:absolute;left:0;width:18px;height:2px;background:currentColor;transition:transform .15s}
+  .sn-icone::before{top:-6px}.sn-icone::after{top:6px}
+  .site-nav.ouvert .sn-icone{background:transparent}
+  .site-nav.ouvert .sn-icone::before{transform:translateY(6px) rotate(45deg)}
+  .site-nav.ouvert .sn-icone::after{transform:translateY(-6px) rotate(-45deg)}
+  [id]{scroll-margin-top:76px}
+  @media (max-width:960px){
+    .sn-bouton{display:inline-flex}
+    .sn-cta-mobile{display:inline-block;margin-left:auto;min-height:44px;line-height:1.6}
+    .sn-liens{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;align-items:stretch;gap:0;margin:0;
+      background:var(--epicea);padding:.25rem max(1.25rem,env(safe-area-inset-left,0px)) 1.25rem;border-top:1px solid rgba(255,255,255,.15);
+      box-shadow:0 18px 30px rgba(22,33,30,.35);max-height:calc(100vh - 62px);overflow-y:auto}
+    .site-nav.ouvert .sn-liens{display:flex}
+    .sn-liens a{display:block;padding:.9rem 0;font-size:1.4rem;border-bottom:1px solid rgba(255,255,255,.12)}
+    .sn-liens a[aria-current]{border-bottom-color:rgba(255,255,255,.12);color:var(--meleze)}
+    .sn-liens li.sn-li-cta{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.sn-icone,.sn-icone::before,.sn-icone::after{transition:none}}
+
+  .pied{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem 2rem}
+  .pied-liens{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem}
+  .pied-liens a{color:#d5ddd8;text-decoration:none;font:500 1.05rem "Barlow Condensed","Arial Narrow",Arial,sans-serif;padding:.25rem 0}
+  .pied-liens a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+  /* Sommaire des randonnées */
+  .sommaire{margin:0 0 2.5rem}
+  .sommaire-titre{font:600 .95rem var(--sans);letter-spacing:.07em;text-transform:uppercase;color:var(--ardoise);margin:0 0 .6rem}
+  .sommaire ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem}
+  .sommaire a{display:inline-flex;align-items:center;gap:.5rem;min-height:40px;padding:.35rem .8rem;border:1.5px solid var(--epicea);background:var(--neige);
+    color:var(--epicea);text-decoration:none;font:600 1.05rem/1.2 var(--sans)}
+  .sommaire a:hover{background:var(--epicea);color:#fff}
+  .pastille{flex:none;width:11px;height:11px;border-radius:50%}
+  .pastille.n-facile{background:var(--verte)}.pastille.n-moyen{background:var(--bleue)}.pastille.n-difficile{background:var(--rouge)}
+  .pastille.n-tres{background:var(--noire);box-shadow:0 0 0 1.5px #fff inset}.pastille.n-rdv{background:var(--meleze)}
+  .haut{position:fixed;right:max(1rem,env(safe-area-inset-right,0px));bottom:max(1rem,env(safe-area-inset-bottom,0px));z-index:40;
+    width:48px;height:48px;display:grid;place-items:center;background:var(--epicea);color:#fff;text-decoration:none;font:700 1.4rem var(--sans);
+    box-shadow:0 4px 14px rgba(22,33,30,.3);opacity:0;pointer-events:none;transition:opacity .2s}
+  .haut.visible{opacity:1;pointer-events:auto}
 </style>
 </head>
 <body>
 
-<header class="tete">
+<header class="site-nav" id="site-nav">
+  <div class="sn-wrap">
+    <button class="sn-bouton" type="button" aria-expanded="false" aria-controls="sn-liens"><span class="sn-icone" aria-hidden="true"></span>Menu</button>
+    <a class="sn-cta sn-cta-mobile" href="index.html#reserver">Réserver</a>
+    <ul class="sn-liens" id="sn-liens" aria-label="Navigation principale">
+      <li><a href="index.html#top">Le chalet</a></li>
+      <li><a href="index.html#espaces">Les espaces</a></li>
+      <li><a href="index.html#autour">Autour</a></li>
+      <li><a href="#top" aria-current="page">Activités</a></li>
+      <li><a href="jeu.html">Jeu de slalom</a></li>
+      <li><a href="index.html#pratique">Infos pratiques</a></li>
+      <li class="sn-li-cta"><a class="sn-cta" href="index.html#reserver">Réserver</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="tete" id="top">
   <div class="wrap">
-    <nav aria-label="Navigation">
-      <a class="brand" href="index.html">Génie des Alpages</a>
-      <a class="retour" href="index.html">← Retour au chalet</a>
-    </nav>
     <div class="intro">
       <div>
         <h1>Activités</h1>
@@ -150,7 +210,7 @@
       </div>
     </div>
   </div>
-</header>
+</div>
 
 <main>
 
@@ -236,9 +296,26 @@
       </div>
       <p class="alerte">Les niveaux reprennent les couleurs des pistes : <strong>vert</strong> facile, <strong>bleu</strong> moyen, <strong>rouge</strong> difficile, <strong>noir</strong> très difficile. Les durées s'entendent hors pauses. Partez tôt, prenez de l'eau et vérifiez la météo : les orages sont fréquents l'après-midi en été.</p>
 
+      <nav class="sommaire" aria-label="Accès rapide aux randonnées">
+        <p class="sommaire-titre">Aller directement à</p>
+        <ul>
+          <li><a href="#rando-le-balcon-des-cotes"><span class="pastille n-facile" aria-hidden="true"></span>Le balcon des Côtes</a></li>
+          <li><a href="#rando-le-plateau-des-glieres"><span class="pastille n-facile" aria-hidden="true"></span>Le plateau des Glières</a></li>
+          <li><a href="#rando-le-plan-de-la-forclaz"><span class="pastille n-facile" aria-hidden="true"></span>Le Plan de la Forclaz</a></li>
+          <li><a href="#rando-le-chalet-du-cure-depuis-le-col-des-aravis"><span class="pastille n-facile" aria-hidden="true"></span>Le chalet du Curé depuis le col des Aravis</a></li>
+          <li><a href="#rando-la-ferme-du-pas-du-loup"><span class="pastille n-rdv" aria-hidden="true"></span>La ferme du Pas du Loup</a></li>
+          <li><a href="#rando-le-lac-de-tardevant"><span class="pastille n-moyen" aria-hidden="true"></span>Le lac de Tardevant</a></li>
+          <li><a href="#rando-le-suet"><span class="pastille n-difficile" aria-hidden="true"></span>Le Suet</a></li>
+          <li><a href="#rando-le-lac-de-lessy-depuis-cenise"><span class="pastille n-difficile" aria-hidden="true"></span>Le lac de Lessy depuis Cenise</a></li>
+          <li><a href="#rando-le-lac-de-lessy-et-l-aiguille-verte"><span class="pastille n-difficile" aria-hidden="true"></span>Le lac de Lessy et l'Aiguille Verte</a></li>
+          <li><a href="#rando-le-plateau-des-auges-depuis-malvoisin"><span class="pastille n-difficile" aria-hidden="true"></span>Le plateau des Auges depuis Malvoisin</a></li>
+          <li><a href="#rando-le-trou-de-la-mouche"><span class="pastille n-tres" aria-hidden="true"></span>Le Trou de la Mouche</a></li>
+        </ul>
+      </nav>
+
       <div class="randos">
 
-        <article class="rando">
+        <article class="rando" id="rando-le-balcon-des-cotes">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le balcon des Côtes</h3><span class="niveau n-facile">Facile</span></div>
             <p class="depart">Départ : place de la Grenette, au-dessus de l'église du Grand-Bornand. Parking de la gare routière ou du cimetière. Boucle balisée.</p>
@@ -261,7 +338,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-plateau-des-glieres">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le plateau des Glières</h3><span class="niveau n-facile">Facile</span></div>
             <p class="depart">Départ : ferme Chez la Jode, plateau des Glières (Le Petit-Bornand), 1393 m. Boucle presque plate.</p>
@@ -285,7 +362,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-plan-de-la-forclaz">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le Plan de la Forclaz</h3><span class="niveau n-facile">Facile</span></div>
             <p class="depart">Départ : parking de la gare routière, Le Grand-Bornand, 910 m. Boucle.</p>
@@ -309,7 +386,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-chalet-du-cure-depuis-le-col-des-aravis">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le chalet du Curé depuis le col des Aravis</h3><span class="niveau n-facile">Facile</span></div>
             <p class="depart">Départ : col des Aravis, parking gratuit derrière le restaurant des Rhododendrons, 1485 m. Aller-retour.</p>
@@ -333,7 +410,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-la-ferme-du-pas-du-loup">
           <div class="rando-texte">
             <div class="rando-tete"><h3>La ferme du Pas du Loup</h3><span class="niveau" style="background:var(--meleze);color:var(--encre)">Sur rendez-vous</span></div>
             <p class="depart">Ferme GAEC Le Pas du Loup, lieu-dit Les Plains, Le Petit-Bornand. Alpage l'été sur le plateau des Glières.</p>
@@ -355,7 +432,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-lac-de-tardevant">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le lac de Tardevant</h3><span class="niveau n-moyen">Moyen</span></div>
             <p class="depart">Départ : parking du lac des Confins, La Clusaz, 1412 m. Aller-retour par le même chemin.</p>
@@ -379,7 +456,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-suet">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le Suet</h3><span class="niveau n-difficile">Difficile</span></div>
             <p class="depart">Départ : Forgeassoud-Dessus (Saint-Jean-de-Sixt), parking près de la ferme, 999 m. Boucle.</p>
@@ -403,7 +480,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-lac-de-lessy-depuis-cenise">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le lac de Lessy depuis Cenise</h3><span class="niveau n-difficile">Difficile</span></div>
             <p class="depart">Départ : parking de Cenise, Le Petit-Bornand, 1557 m. Aller-retour par le col de Sosay.</p>
@@ -427,7 +504,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-lac-de-lessy-et-l-aiguille-verte">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le lac de Lessy et l'Aiguille Verte</h3><span class="niveau n-difficile">Difficile</span></div>
             <p class="depart">Départ : bout de la route de Paradis, Le Petit-Bornand, 1375 m. Boucle avec l'Aiguille Verte en option.</p>
@@ -451,7 +528,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-plateau-des-auges-depuis-malvoisin">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le plateau des Auges depuis Malvoisin</h3><span class="niveau n-difficile">Difficile</span></div>
             <p class="depart">Départ : parking de Malvoisin, Entremont. Boucle balisée, ouverte du 15 mai au 31 octobre.</p>
@@ -473,7 +550,7 @@
           </div>
         </article>
 
-        <article class="rando">
+        <article class="rando" id="rando-le-trou-de-la-mouche">
           <div class="rando-texte">
             <div class="rando-tete"><h3>Le Trou de la Mouche</h3><span class="niveau n-tres">Très difficile</span></div>
             <p class="depart">Départ : parking du lac des Confins, La Clusaz, 1442 m. Boucle par la combe de Paccaly.</p>
@@ -503,10 +580,18 @@
 
 </main>
 
+<a class="haut" href="#top" aria-label="Revenir en haut de la page">↑</a>
+
 <footer>
-  <div class="wrap">
+  <div class="wrap pied">
     <span>Chalet Génie des Alpages, Glières-Val-de-Borne, Haute-Savoie</span>
-    <a href="index.html">Retour au chalet</a>
+    <nav aria-label="Liens de bas de page" class="pied-liens">
+      <a href="index.html#top">Le chalet</a>
+      <a href="activites.html">Activités</a>
+      <a href="jeu.html">Jeu de slalom</a>
+      <a href="index.html#pratique">Infos pratiques</a>
+      <a href="index.html#reserver">Réserver</a>
+    </nav>
   </div>
   <div class="wrap"><p class="sources">Données des itinéraires : Visorando et Haute-Savoie Tourisme. Chiffres des domaines skiables donnés à titre indicatif, à vérifier auprès des stations.</p></div>
 </footer>
@@ -568,6 +653,25 @@
   var h = (location.hash||"").replace("#","");
   var mois = new Date().getMonth(); // novembre à avril : hiver
   choisir(sections[h] ? h : ((mois>=10 || mois<=3) ? "hiver" : "ete"), false);
+})();
+</script>
+<script>
+(function(){
+  var nav=document.getElementById("site-nav"); if(!nav) return;
+  var btn=nav.querySelector(".sn-bouton");
+  function fermer(){ nav.classList.remove("ouvert"); btn.setAttribute("aria-expanded","false"); }
+  btn.addEventListener("click",function(){ var o=!nav.classList.contains("ouvert"); nav.classList.toggle("ouvert",o); btn.setAttribute("aria-expanded",o?"true":"false"); });
+  nav.querySelectorAll(".sn-liens a").forEach(function(a){ a.addEventListener("click",fermer); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape" && nav.classList.contains("ouvert")){ fermer(); btn.focus(); } });
+  document.addEventListener("click",function(e){ if(!nav.contains(e.target)) fermer(); });
+  window.addEventListener("resize",function(){ if(window.innerWidth>960) fermer(); });
+})();
+</script>
+<script>
+(function(){
+  var b=document.querySelector(".haut"); if(!b) return;
+  function maj(){ b.classList.toggle("visible", window.scrollY > 900); }
+  window.addEventListener("scroll", maj, {passive:true}); maj();
 })();
 </script>
 </body>
